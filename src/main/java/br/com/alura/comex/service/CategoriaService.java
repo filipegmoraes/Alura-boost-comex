@@ -1,5 +1,7 @@
 package br.com.alura.comex.service;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.alura.comex.controller.dto.CategoriaDto;
+import br.com.alura.comex.controller.dto.PedidosCategoriaDto;
 import br.com.alura.comex.controller.form.CategoriaForm;
 import br.com.alura.comex.controller.form.CategoriaUpdateForm;
 import br.com.alura.comex.model.Categoria;
+import br.com.alura.comex.model.ItemDePedido;
 import br.com.alura.comex.model.StatusCategoria;
 import br.com.alura.comex.repository.CategoriaRepository;
 
@@ -30,6 +34,17 @@ public class CategoriaService {
 	public List<CategoriaDto> findAll(){
 		List<Categoria> categorias = categoriaRepository.findAll();
 		return CategoriaDto.converter(categorias);
+	}
+	
+	public PedidosCategoriaDto RelatorioPorCategoria(Long id){
+		List<ItemDePedido> itemDePedidos = categoriaRepository.findPedidosByCategoria(id); 
+		Integer qtd = 0;
+		BigDecimal total = null;
+		for (ItemDePedido itemDePedido : itemDePedidos) {
+			qtd += itemDePedido.getQuantidade();
+			total.add(itemDePedido.getValorTotalItem());
+		}
+		return new PedidosCategoriaDto(itemDePedidos.get(0).getProdutoId().getCategoria().getNome(), qtd, total);
 	}
 	
 	public CategoriaDto deleteById(Long id) {

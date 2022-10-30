@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import br.com.alura.comex.model.Categoria;
-import br.com.alura.comex.model.StatusCategoria;
 
 
 public class CategoriaProdutoDto {
@@ -13,7 +12,6 @@ public class CategoriaProdutoDto {
 	 private String nome;
 	 
 	 public CategoriaProdutoDto(Categoria categoria) {
-		 this.id = categoria.getId();
 		 this.nome = categoria.getNome();
 	}
 
