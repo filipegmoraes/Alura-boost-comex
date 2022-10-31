@@ -1,9 +1,9 @@
 package br.com.alura.comex.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import br.com.alura.comex.model.Cliente;
 
-public interface ClienteRepository extends JpaRepository<Cliente, Long> {
+public interface ClienteRepository extends PagingAndSortingRepository<Cliente, Long> {
 
 }

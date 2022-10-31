@@ -36,7 +36,18 @@ public class ProdutoService {
 		produto.setNome(produtoForm.getNome());
 		produto.setPrecoUnitario(produtoForm.getPrecoUnitario());
 		produto.setQuantidadeEstoque(produtoForm.getQuantidadeEstoque());	
-		return new ProdutoDto(produto);
+		return new ProdutoDto(produtoRepository.save(produto));
+	}
+	
+	public ProdutoDto update(ProdutoForm updateForm, Long id) {
+		Optional<Produto> optional = produtoRepository.findById(id);
+		Optional<Categoria> categoria = categoriaRepository.findById(updateForm.getCategoria());
+		optional.get().setCategoria(categoria.get());
+		optional.get().setDescricao(updateForm.getDescricao());
+		optional.get().setNome(updateForm.getNome());
+		optional.get().setPrecoUnitario(updateForm.getPrecoUnitario());
+		optional.get().setQuantidadeEstoque(updateForm.getQuantidadeEstoque());
+		return new ProdutoDto(produtoRepository.save(optional.get()));	
 	}
 
 	public List<ProdutosDto> findAll(int page){
@@ -46,4 +57,23 @@ public class ProdutoService {
 		produtos.forEach(produto -> produtosDto.add(new ProdutosDto(produto)));
 		return produtosDto;
 	}
+	
+	public ProdutoDto findById(Long id) {
+		Optional<Produto> optional = produtoRepository.findById(id);
+		if(optional.isPresent()) {
+			return new ProdutoDto(optional.get());
+		}
+		return null;
+	}
+	
+	public ProdutoDto deleteById(Long id) {
+		Optional<Produto> optional = produtoRepository.findById(id);
+		if(optional.isPresent()) {
+			produtoRepository.delete(optional.get());
+			return new ProdutoDto(optional.get());
+		}
+		return null;
+	}
+	
+	
 }

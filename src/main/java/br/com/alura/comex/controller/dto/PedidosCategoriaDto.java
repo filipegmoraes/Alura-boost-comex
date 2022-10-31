@@ -1,10 +1,6 @@
 package br.com.alura.comex.controller.dto;
 
 import java.math.BigDecimal;
-import java.util.List;
-
-import br.com.alura.comex.model.ItemDePedido;
-import br.com.alura.comex.model.Pedido;
 
 public class PedidosCategoriaDto {
 
