@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.alura.comex.controller.dto.ClienteDto;
-import br.com.alura.comex.controller.dto.ProdutosDto;
 import br.com.alura.comex.controller.form.ClienteForm;
 import br.com.alura.comex.service.ClienteService;
 

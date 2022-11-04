@@ -11,8 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import br.com.alura.comex.controller.dto.ItensDisponiveisDto;
 import br.com.alura.comex.controller.dto.ProdutoDto;
 import br.com.alura.comex.controller.dto.ProdutosDto;
+import br.com.alura.comex.controller.form.ItensForm;
 import br.com.alura.comex.controller.form.ProdutoForm;
 import br.com.alura.comex.model.Categoria;
 import br.com.alura.comex.model.Produto;
@@ -62,6 +64,25 @@ public class ProdutoService {
 		Optional<Produto> optional = produtoRepository.findById(id);
 		if(optional.isPresent()) {
 			return new ProdutoDto(optional.get());
+		}
+		return null;
+	}
+	
+	public List<ItensDisponiveisDto> findAllById(List<ItensForm> itens, String listId){
+		List<Produto> produtos = new ArrayList<>();
+		produtos = produtoRepository.findAllById(listId);
+		List<ItensDisponiveisDto> produtosDisponiveis = new ArrayList<>();
+		if(produtos.size() == itens.size()) {
+			for (Produto produto : produtos) {
+				for (ItensForm item : itens) {
+					if(item.getProdutoId() == produto.getId()) {
+						if(produto.getQuantidadeEstoque() > item.getQuantidadeVendida()) {
+							produtosDisponiveis.add( new ItensDisponiveisDto(produto, item.getQuantidadeVendida()));
+						}
+					}
+				}
+			}
+			return produtosDisponiveis;			
 		}
 		return null;
 	}

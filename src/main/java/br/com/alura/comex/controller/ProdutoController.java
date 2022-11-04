@@ -8,7 +8,9 @@ import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,8 +45,19 @@ public class ProdutoController {
 	}
 	
 	@GetMapping
-	public List<ProdutosDto> Listar(int page){
-		return produtoService.findAll(page);
+	public ResponseEntity<List<ProdutosDto>> Listar(int page){	
+		return ResponseEntity.ok(produtoService.findAll(page));
 	}
+	
+	@PutMapping("/{id}")
+	@Transactional
+	public ResponseEntity<ProdutoDto> atualizar(@PathVariable Long id, @RequestBody @Valid ProdutoForm form){
+		if(categoriaService.findById(form.getCategoria()) != null
+				&& produtoService.findById(id) != null) {
+			 ProdutoDto produtoDto = produtoService.update(form, id);
+			 return ResponseEntity.ok(produtoDto);
+		}	
+		return ResponseEntity.notFound().build();
+ 	}
 	
 }

@@ -2,6 +2,7 @@ package br.com.alura.comex.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,14 @@ public class ClienteService {
 		cliente.setRua(clienteForm.getRua());
 		cliente.setTelefone(clienteForm.getTelefone());
 		return new ClienteDto(clienteRepository.save(cliente));
+	}
+	
+	public ClienteDto findById(Long id) {
+		Optional<Cliente> cliente = clienteRepository.findById(id);
+		if(cliente.isPresent()) {
+			return new ClienteDto(cliente.get());
+		}
+		return null;
 	}
 	
 	public List<ClienteDto> findAll(int page){

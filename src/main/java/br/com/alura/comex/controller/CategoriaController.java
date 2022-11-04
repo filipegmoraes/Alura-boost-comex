@@ -5,6 +5,7 @@ import java.net.URI;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +34,7 @@ public class CategoriaController {
 	}
 	
 	@GetMapping("/pedidos")
+	@Cacheable(value = "PedidosPorCategoria")
 	public PedidosCategoriaDto RelatorioPedidosCategoria(Long id){
 		PedidosCategoriaDto relatorioDto = categoriaService.RelatorioPorCategoria(id);
 		return relatorioDto;
