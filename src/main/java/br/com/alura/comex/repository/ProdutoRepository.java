@@ -9,6 +9,7 @@ import br.com.alura.comex.model.Produto;
 
 public interface ProdutoRepository extends PagingAndSortingRepository<Produto, Long> {
 
-	@Query(value = "select * from Produto where id in(:listId)")
+	@Query(value = "select p.id, p.descricao, p.nome, p.precoUnitario, p.quantidadeEstoque, p.categoria"
+			+ " from Produto p where id in(:listId)")
 	List<Produto> findAllById(String listId);
 }

@@ -8,5 +8,5 @@ import br.com.alura.comex.model.ItemDePedido;
 
 public interface ItemDePedidoRepository extends JpaRepository<ItemDePedido, Long>{
 
-	List<ItemDePedido> findByPedidoId(Long id);
+	List<ItemDePedido> findByPedido_Id(Long id);
 }

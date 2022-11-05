@@ -69,7 +69,7 @@ public class PedidoService {
 	public PedidoDto findById(Long id) {
 		Optional<Pedido> optional = pedidoRepository.findById(id);
 		if(optional.isPresent()) {
-			List<ItemDePedido> itens = itemDePedidoRepository.findByPedidoId(id);
+			List<ItemDePedido> itens = itemDePedidoRepository.findByPedido_Id(id);
 			return new PedidoDto(itens);
 		}
 		return null;
