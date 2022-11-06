@@ -38,6 +38,10 @@ public class Usuario implements UserDetails {
 		this.senha = new BCryptPasswordEncoder().encode(senha);
 	}
 
+	public Long getId() {
+		return id;
+	}
+
 	public String getEmail() {
 		return email;
 	}

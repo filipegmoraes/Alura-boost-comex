@@ -66,11 +66,13 @@ public class PedidoService {
 		return new PedidoDto(itens);
 	}
 	
-	public PedidoDto findById(Long id) {
+	public PedidoDto findById(Long id, Long userId) {
 		Optional<Pedido> optional = pedidoRepository.findById(id);
 		if(optional.isPresent()) {
 			List<ItemDePedido> itens = itemDePedidoRepository.findByPedido_Id(id);
-			return new PedidoDto(itens);
+			if(optional.get().getCliente().getUsuario().getId() == userId) {
+				return new PedidoDto(itens);
+			}	
 		}
 		return null;
 	}

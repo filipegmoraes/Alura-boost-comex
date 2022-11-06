@@ -7,6 +7,10 @@ import javax.validation.Valid;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.alura.comex.controller.dto.PedidoDto;
 import br.com.alura.comex.controller.form.PedidoForm;
+import br.com.alura.comex.model.Usuario;
 import br.com.alura.comex.service.ClienteService;
 import br.com.alura.comex.service.PedidoService;
 import br.com.alura.comex.service.ProdutoService;
@@ -43,9 +48,9 @@ public class PedidosController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<PedidoDto> detalhar(@PathVariable Long id) {
-		if(pedidoService.findById(id) != null) {
-			return ResponseEntity.ok(pedidoService.findById(id));
+	public ResponseEntity<PedidoDto> detalhar(@PathVariable Long id, @AuthenticationPrincipal Usuario logado) {
+		if(pedidoService.findById(id, logado.getId()) != null) {
+			return ResponseEntity.ok(pedidoService.findById(id, logado.getId()));
 		}
 		return ResponseEntity.notFound().build();
 	}
