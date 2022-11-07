@@ -1,4 +1,4 @@
-package br.com.alura.comex.config.validacao.security;
+package br.com.alura.comex.config.security;
 
 import java.util.Date;
 

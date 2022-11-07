@@ -1,4 +1,4 @@
-package br.com.alura.comex.config.validacao.security;
+package br.com.alura.comex.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -46,8 +46,9 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.GET, "/produto").permitAll()
-		.antMatchers(HttpMethod.POST, "/auth").permitAll()
-		.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+		.antMatchers("/swagger-ui.html").permitAll()
+        .antMatchers("/swagger-ui/**").permitAll()
+        .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
 		.anyRequest().authenticated()
 		.and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -56,7 +57,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-	
+	    web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**","/configuration/**", "/swagger-ui/**");
 	}
 	
 }
